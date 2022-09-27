@@ -17,6 +17,7 @@ if($p1 > $p2){
     }
     else
         echo "<p> Unentschieden </p>";
+
 ?>
 
 </body>
