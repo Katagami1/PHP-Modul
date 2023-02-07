@@ -1,11 +1,9 @@
 <?php
     session_start();
-    # Es sollen keine Fehlermeldungen für den Nutzer sichtbar sein
     error_reporting(E_ERROR | E_PARSE);
     $eingeloggt = false;
     $vorname = "";
     $nachname = "";
-    # Cookie braucht man z.B. für persönliche Begrüßung oder Sonstiges
     $benutzername = $_COOKIE["benutzername"];
     $geschlecht = "";
     $alter = 0;
@@ -27,7 +25,6 @@
 
     $abfrage = mysqli_query($db, "select * from benutzer where Benutzername = '$benutzername'");
 
-    # Ganze Selectbfrage wird in Array "$werte" reingeschrieben und Variablen = Datenbankvariablen
     foreach($abfrage as $x => $werte) {
         $vorname = $werte["vorname"];
         $nachname = $werte["nachname"];
@@ -50,36 +47,27 @@
                 <th>Datum und Uhrzeit</th>
                 <?php
                     $anfrage = "SELECT * from forum";
-                    # ALles aus SELECT Abfrage in Ergebnis
                     $ergebnis = mysqli_query($db, $anfrage);
-                    # Anzahl von Zeilen
                     $anzahl = mysqli_num_rows($ergebnis);
-                    # Alles aus Tabelle "forum" von Datenbank wird in neue Tabelle eingefügt
                     for ($a = $anzahl - 1; $a > -1; $a--) {
                         mysqli_data_seek($ergebnis, $a);
                         $zeile = mysqli_fetch_row($ergebnis);
                         print("<tr align = 'center'>");
                         print("<td>");
-                        # zeile[1] ist der Kategoriename
                         print($zeile[1]);
                         print("</td>");
                         print("<td>");
                         print("<a href='read.php?beitrags_id=");
-                        # zeile[0] = Beitragsid, wichtig für read.php
                         print($zeile[0]);
                         print("'>");
-                        # zeile[6] = Betreff
                         print($zeile[6]);
-                       print("</a>");
+                        print("</a>");
                         print("</td>");
                         print("<td>");
-                        # zeile[3] = Username
                         print($zeile[3]);
                         print("<td>");
-                        # zeile[4] = datum
                         print($zeile[4]);
                         print(" um ");
-                        # zeile[5] = Uhrzeit
                         print($zeile[5]);
                         print("</td>");
                         print("</tr>");
@@ -88,8 +76,6 @@
                     }
                     $kategeoriearray = explode("|", $kategeoriearray);
                     print("</table>");
-
-                    # Ganze Selectbfrage wird in Array "$werte" reingeschrieben und Variablen = Datenbankvariablen
                     foreach($abfrage as $x => $werte) {
                     $geschlecht = $werte["Geschlecht"];
                     $alter = $werte["Lebensalter"];
@@ -113,17 +99,14 @@
 
                     ?>
                 <?php
-                # Funktion für Sortieren, geht nicht
                 if (!isset($_POST["kategorie"])) {
                     $kategeoriearray = $_POST["kategorie"];
                     $abfrage = mysqli_query($db, "select * from forum order by '$kategeoriearray' DESC");
                 }
 
-                # Wenn man eingeloggt ist und die statischen Daten unvollständig sind => muss man ausfüllen
                     if ($eingeloggt && ($geschlecht == "" || $alter == 0 || $groesse == 0 || $gewicht == 0)){
                         print ("<br><br> <a href='userinfo.php'>Deine Daten sind noch unvollständig. Bitte aktualisiere sie.</a><br>");
                     } else {
-                        # Wenn statische Daten gefüllt sind, kann man sie ansehen und dynamische Daten eingeben
                         print("<br> <a href='userdetails.php'>Deine persönliche Angaben</a>");
                         print("<br> <a href='userdynamic.php'>Trage deine Trainingseinheiten ein</a>");
                     }

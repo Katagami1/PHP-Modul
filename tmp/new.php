@@ -8,7 +8,6 @@
     <h2>Ihr Forumsbeitrag:</h2>
     <table class="beitrag">
         <tr>
-            <?php #Wenn man was absendet, landet man auf der gleichen Seite mit Updates ?>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <td>Kategoriename</td>
             <td><input type="text" name="kategorie"></td>
@@ -41,19 +40,15 @@
         $eingeloggt = true;
     }
 
-    # Geht nur in IF-Bedingung rein, wenn alle Felder ausgefüllt wurden
     if (!empty($_POST["kategorie"]) && !empty($_POST["betreff"]) && (!empty($_POST["forumsbeitrag"]))) {
-        # Was man im Textfeld eingegeben hat, wird in den Variablen gespeichert
         $kategorie = $_POST["kategorie"];
         $betreff = $_POST["betreff"];
         $forumsbeitrag = $_POST["forumsbeitrag"];
-
         $abfrage = mysqli_query($db, "select Kategoriename from forum where Kategoriename ='$kategorie';");
         $abfrage_gefunden = mysqli_num_rows($abfrage);
 
-        # SQL Abfrage überprüft ob eingegebener Kategoriename in Datenbank ist
         if ($abfrage_gefunden != 0) {
-            print("<br>Kategoriename bereits vorhanden!"); #Kategoriename bereits vergeben
+            print("<br>Kategoriename bereits vorhanden!"); #Benutzername bereits vergeben
         } else {
         $befehl = mysqli_query($db, "insert into forum (Kategoriename, user, betreff, beitragstext) 
     VALUES ('$kategorie', '$benutzername','$betreff', '$forumsbeitrag')");

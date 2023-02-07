@@ -35,7 +35,6 @@ if(($_COOKIE["eingeloggt"] == "true")) {
 $id=$_GET['beitrags_id'];
 $abfrage = mysqli_query($db, "select * from forum");
 
-# Ganze Selectabfrage wird in Array "$werte" reingeschrieben und Variablen = Datenbankvariablen
 foreach($abfrage as $x => $werte) {
     $beitrags_id = $werte["beitrags_id"];
     $kategoriename = $werte["Kategoriename"];
@@ -45,27 +44,20 @@ foreach($abfrage as $x => $werte) {
     $betreff = $werte["betreff"];
     $beitragstext = $werte["beitragstext"];
 }
-# SQL Abfrage nach Beitragsid die wir aus URL erhalten haben
+
 $abfrage = mysqli_query($db, "select * from forum where beitrags_id LIKE '$id'");
-# Abfrage in Array, um auf einzelene Werte zuzugreifen
 $zeile=mysqli_fetch_row($abfrage);
 print ("<br><br><b>Kategorie: </b>");
-#Kategorie
 print($zeile[1]);
 print ("<br><b>Betreff: </b>");
-#Betreff
 print ($zeile[6]);
 print ("<br><b>von: </b>");
-#User
 print ($zeile[3]);
 print ("</a><br><b>Geschrieben am: </b>");
-#Datum
 print ($zeile[4]);
 print (" um ");
-# Uhrzeit
 print ($zeile[5]);
 print ("<br><br><hr><br><br>");
-# zeile[7] Beitragstext
 print ($zeile[7]);
     if($eingeloggt){
         print ("<br> <br> <br> <a href='reply.php?beitrags_id=$id'><button>Antworten</button></a>");

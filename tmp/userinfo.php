@@ -20,7 +20,6 @@ if(($_COOKIE["eingeloggt"] == "true")) {
     <title>Benutzerinfo</title>
 </head>
 <body>
-<?php # Aktuelle Seite wird nach Updates aktualisiert?>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 <tr>
     <td><p>Ihr Geschlecht</p></td>
@@ -58,7 +57,6 @@ if (!empty($_POST["geschlecht"]) && !empty($_POST["alter"]) && !empty($_POST["gr
     $groesse = $_POST["groesse"];
     $gewicht = $_POST["gewicht"];
     #$befehl = mysqli_query($db, "insert into Benutzer (Geschlecht, Alter, Gewicht) VALUES ('$geschlecht', '$alter', '$gewicht')");
-    # Eingegebene Werte in SQL Update
     $befehl = mysqli_query($db, "UPDATE Benutzer SET Geschlecht = '$geschlecht' WHERE Benutzername = '$benutzername'");
     $befehl = mysqli_query($db, "UPDATE Benutzer SET Lebensalter = $alter WHERE Benutzername = '$benutzername'");
     $befehl = mysqli_query($db, "UPDATE Benutzer SET Groesse = $groesse WHERE Benutzername = '$benutzername'");

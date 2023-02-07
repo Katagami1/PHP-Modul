@@ -30,8 +30,8 @@ if (!empty($_GET["anrede"])) {
          echo htmlspecialchars($_GET["anrede"]);
 }
  echo " " . htmlspecialchars($_GET["nachname"]) . "<br />\n";
- if (!empty($_GET["thema"])){
-        echo "Das gewählte Thema: ". htmlspecialchars($_GET["thema"]) .
+ if (!empty($_POST["thema"])){
+        echo "Das gewählte Thema: ". htmlspecialchars($_POST["thema"]) .
             "<br />\n ";
 }
  if(isset($_GET["thema2"]) && is_array($_GET["thema2"])) {

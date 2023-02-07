@@ -1,14 +1,10 @@
 <?php
-    # Start der Sitzung
     session_start();
-    # Datenbank connection
     $verbindung = mysqli_connect("localhost", "root");
     mysqli_select_db($verbindung, "forum");
-    # Cookie zum Einspeichern ob man eingeloggt ist oder nicht und den Benutzernamen
     setcookie("eingeloggt", "false");
     setcookie("benutzername", "");
 
-    # Überprüft ob in der URL "register" steht => Inhalt von den Feldern in Variablen gespeichert
     if(isset($_GET["register"])) {
         $vorname = $_POST["firstname"];
         $nachname = $_POST["lastname"];
@@ -21,16 +17,13 @@
             return;
         }
 
-        # SQL Abfrage sucht eingegebenen Benutzernamen in der Datenbank
         $abfrage = mysqli_query($verbindung, "select Benutzername from benutzer where Benutzername ='$benutzername';");
         $abfrage_gefunden = mysqli_num_rows($abfrage);
 
-        # Wenn Benutzername gefunden wurde => Error
         if ($abfrage_gefunden != 0) {
             header("Location: register.php?error2"); #Benutzername bereits vergeben
         }
 
-        # SQL Befehl, neuen User in Datenbank einfügen
         $befehl = mysqli_query($verbindung, "insert into benutzer (Benutzername, vorname,
                       nachname, passwort) values ('$benutzername', '$vorname', '$nachname', '$passwort');");
         header("Location: login.php?success");
@@ -62,7 +55,6 @@
             <input type="password" id="pw" name="pw" placeholder="Passwort" required><br><br>
             <input type="password" id="pw-again" name="pw-again" placeholder="Passwort wiederholen" required> <br><br>
             <input type="submit">
-            <?php #a href = Text als Link => Weiterleitung zu anderer Datei ?>
             <br> <br><a href='login.php'>Du hast schon einen Account? Hier geht es zum Login!</a>
             <br> <a href='index.php'>Zurück zum Forumsüberblick</a>
         </form>
