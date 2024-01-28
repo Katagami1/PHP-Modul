@@ -3,3 +3,7 @@ $texte = array("Hallo mein Name ist Connor", "Markus ist ein n", "Kara hätte ni
 $max = count($texte) - 1;
 $zufallszahl = rand(0, $max);
 echo $texte[$zufallszahl];
+
+foreach($texte as $x){
+    echo $x . "\n";
+}
